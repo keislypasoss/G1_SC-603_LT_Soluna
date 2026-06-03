@@ -1,2 +1,2 @@
-# G1_SC-603_LT_Soluna
+# G3_SC-935_JN_Soluna
 Avances del proyecto
