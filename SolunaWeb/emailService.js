@@ -11,19 +11,20 @@ const nodemailer = require('nodemailer');
 
 //fclc ljkw zewi ypkv
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Puedes usar: gmail, outlook, yahoo, etc.
+    service: 'gmail',
     auth: {
-        user: 'jel2407@gmail.com', // Tu correo
-        pass: 'fclc ljkw zewi ypkv' // Contraseña de aplicación de Gmail
+        // Obtenidos de forma segura de las variables de entorno
+        user: process.env.EMAIL_USER || 'jel2407@gmail.com',
+        pass: process.env.EMAIL_PASS || 'fclc ljkw zewi ypkv'
     }
 });
 
-// Función para enviar email de recuperación
 async function enviarEmailRecuperacion(destinatario, token, nombreUsuario) {
-    const enlaceRecuperacion = `http://localhost:3000/restablecer-password.html?token=${token}`;
-
+    // APP_URL debe configurarse en Azure como 'https://nombre-de-tu-app.azurewebsites.net'
+    const appUrl = process.env.APP_URL || 'http://localhost:3000';
+    const enlaceRecuperacion = `${appUrl}/restablecer-password.html?token=${token}`;
     const mailOptions = {
-        from: '"Restaurante Soluna" <jel2407@gmail.com>',
+        from: `"Restaurante Soluna" <${process.env.EMAIL_USER || 'jel2407@gmail.com'}>`,
         to: destinatario,
         subject: 'Recuperación de Contraseña - Restaurante Soluna',
         html: `
